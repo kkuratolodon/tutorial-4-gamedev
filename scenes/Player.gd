@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-const UP = Vector2(0, -1)
 
 @export var speed: int = 400
 @export var GRAVITY: int = 1200
@@ -18,19 +17,18 @@ func get_input():
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 	get_input()
-	set_velocity(velocity)
-	set_up_direction(UP)
 	move_and_slide()
-	velocity = velocity
 
 func _process(_delta):
-	if velocity.y != 0:
+	if not is_on_floor():
 		$Animator.play("Jump")
 	elif velocity.x != 0:
 		$Animator.play("Walk")
+	else:
+		$Animator.play("Idle")
+	
+	if velocity.x != 0:
 		if velocity.x > 0:
 			$Sprite2D.flip_h = false
 		else:
 			$Sprite2D.flip_h = true
-	else:
-		$Animator.play("Idle")
