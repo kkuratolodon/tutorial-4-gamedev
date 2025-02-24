@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: int = 400
-@export var GRAVITY: int = 1200
+@export var gravity: int = 1200
 @export var jump_speed: int = -400
 
 
@@ -16,7 +16,7 @@ func get_input():
 
 
 func _physics_process(delta):
-	velocity.y += delta * GRAVITY
+	velocity.y += delta * gravity
 	get_input()
 	move_and_slide()
 
