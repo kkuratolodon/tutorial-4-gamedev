@@ -22,6 +22,7 @@ func _physics_process(delta):
 
 
 func _process(_delta):
+	
 	if not is_on_floor():
 		$Animator.play("Jump")
 	elif velocity.x != 0:
