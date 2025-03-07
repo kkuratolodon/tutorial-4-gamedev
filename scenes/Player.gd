@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
+signal update_hp(new_hp: int)
+
 @export var speed: int = 400
 @export var gravity: int = 1200
 @export var jump_speed: int = -400
-
+var _hp = 6
 
 func get_input():
 	velocity.x = 0
@@ -20,6 +22,14 @@ func _physics_process(delta):
 	get_input()
 	move_and_slide()
 
+func get_damage(damage):
+	_hp -= damage
+	print(_hp)
+	update_hp.emit(_hp)
+	if _hp <= 0:
+		print("tes")
+		get_tree().change_scene_to_file(str("res://scenes/LoseScreen.tscn"))
+		
 
 func _process(_delta):
 	

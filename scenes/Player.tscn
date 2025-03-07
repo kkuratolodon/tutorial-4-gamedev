@@ -3,8 +3,9 @@
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_xsgpf"]
 [ext_resource type="Texture2D" uid="uid://dhsqj8dybb7fq" path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_alien.png" id="2"]
 
-[sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(52.924, 76.884)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0galt"]
+radius = 18.0
+height = 54.0
 
 [sub_resource type="Animation" id="2"]
 resource_name = "Idle"
@@ -64,10 +65,13 @@ _data = {
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
+floor_stop_on_slope = false
 script = ExtResource("1_xsgpf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("1")
+z_index = 1
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_0galt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -25)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://6uvffl822af8"]
+
+[ext_resource type="Script" path="res://scenes/Damage2.gd" id="1_wm1kv"]
+[ext_resource type="Texture2D" uid="uid://daqqxs1h08i3x" path="res://assets/kenney_platformerpack/PNG/Enemies/slimePurple.png" id="2_jwv4e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbvs0"]
+radius = 48.2071
+
+[node name="FallingSlime" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 3
+gravity_scale = 0.5
+contact_monitor = true
+max_contacts_reported = 50
+script = ExtResource("1_wm1kv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -30)
+texture = ExtResource("2_jwv4e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.785258, 0.785258)
+shape = SubResource("CircleShape2D_qbvs0")

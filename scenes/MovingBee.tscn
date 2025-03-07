@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dehnx1g6hgqdi"]
+
+[ext_resource type="Script" path="res://scenes/moving_bee.gd" id="1_snhen"]
+[ext_resource type="Texture2D" uid="uid://cmlt5c4ma3gsq" path="res://assets/kenney_platformerpack/PNG/Enemies/bee.png" id="2_7dj06"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ruxua"]
+radius = 58.8005
+
+[node name="MovingBee" type="RigidBody2D"]
+scale = Vector2(-1, -1)
+collision_layer = 4
+collision_mask = 3
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 50
+script = ExtResource("1_snhen")
+speed = 750.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_7dj06")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.75, 0.75)
+shape = SubResource("CircleShape2D_ruxua")
