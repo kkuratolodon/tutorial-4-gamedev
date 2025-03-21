@@ -1,0 +1,137 @@
+[gd_scene load_steps=10 format=3 uid="uid://d6djp8awxruu"]
+
+[ext_resource type="Script" path="res://scenes/stage_select.gd" id="1_n1qua"]
+[ext_resource type="Texture2D" uid="uid://the65ph71oeo" path="res://assets/kenney_platformerpack/PNG/Tiles/sign.png" id="2_dlwlx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7466k"]
+bg_color = Color(0.156863, 0.0941176, 0.188235, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_yyyci"]
+font_names = PackedStringArray("Minecraft")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hover"]
+texture = ExtResource("2_dlwlx")
+modulate_color = Color(1.2, 1.2, 1.2, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressed"]
+texture = ExtResource("2_dlwlx")
+modulate_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b1coy"]
+texture = ExtResource("2_dlwlx")
+
+[sub_resource type="SystemFont" id="SystemFont_f6chs"]
+font_names = PackedStringArray("Minecraft")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
+texture = ExtResource("2_dlwlx")
+
+[node name="StageSelect" type="Node2D"]
+script = ExtResource("1_n1qua")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7466k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"GraphFrameTitleLabel"
+theme_override_fonts/font = SubResource("SystemFont_yyyci")
+theme_override_font_sizes/font_size = 90
+text = "SELECT STAGE"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Control/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Level1Button" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
+theme_override_styles/normal = SubResource("StyleBoxTexture_b1coy")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Panel/VBoxContainer/HBoxContainer/Level1Button"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 67.0
+offset_right = 163.0
+offset_bottom = 98.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_f6chs")
+theme_override_font_sizes/font_size = 30
+text = "LEVEL 1"
+
+[node name="Level2Button" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
+theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Panel/VBoxContainer/HBoxContainer/Level2Button"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 166.0
+offset_bottom = 101.0
+theme_override_fonts/font = SubResource("SystemFont_f6chs")
+theme_override_font_sizes/font_size = 30
+text = "LEVEL 2"
+
+[node name="BackButton" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("SystemFont_f6chs")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
+theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Panel/VBoxContainer/BackButton"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 46.0
+offset_right = 162.0
+offset_bottom = 77.0
+theme_override_fonts/font = SubResource("SystemFont_f6chs")
+theme_override_font_sizes/font_size = 30
+text = "BACK"
+
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/HBoxContainer/Level1Button" to="." method="_on_level1_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/HBoxContainer/Level2Button" to="." method="_on_level2_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

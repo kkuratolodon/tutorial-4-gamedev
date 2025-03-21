@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cublipy43m8dt"]
+
+[ext_resource type="Texture2D" uid="uid://cyk3frswe7iui" path="res://assets/kenney_platformerpack/PNG/Tiles/fence.png" id="1_gvirf"]
+[ext_resource type="Script" path="res://scenes/pause_button.gd" id="2_eixxe"]
+
+[node name="PauseButton" type="TextureButton"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 52.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture_normal = ExtResource("1_gvirf")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("2_eixxe")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

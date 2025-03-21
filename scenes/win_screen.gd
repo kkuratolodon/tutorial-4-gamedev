@@ -1,4 +1,4 @@
-class_name LoseScreen
+class_name WinScreen
 extends Node2D
 
 static var last_level: String = "Level1"
@@ -11,16 +11,16 @@ func _ready():
     
 func _process(delta: float) -> void:
     if Input.is_action_just_pressed("restart"):
-        _restart_level()
+        _go_to_stage_select()
         
-func _on_button_pressed() -> void:
-    _transition_to_scene("res://scenes/" + last_level + ".tscn")
-
 func _on_main_menu_button_pressed() -> void:
     _transition_to_scene("res://scenes/TitleScreen.tscn")
 
-func _restart_level() -> void:
-    _transition_to_scene("res://scenes/" + last_level + ".tscn")
+func _on_stage_select_button_pressed() -> void:
+    _go_to_stage_select()
+
+func _go_to_stage_select() -> void:
+    _transition_to_scene("res://scenes/StageSelect.tscn")
 
 func _transition_to_scene(scene_path: String) -> void:
     # Play fade out animation

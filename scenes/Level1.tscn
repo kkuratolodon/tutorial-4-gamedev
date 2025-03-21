@@ -1,12 +1,17 @@
-[gd_scene load_steps=10 format=4 uid="uid://yqmk0vpvnyxr"]
+[gd_scene load_steps=17 format=4 uid="uid://yqmk0vpvnyxr"]
 
 [ext_resource type="PackedScene" uid="uid://bc2fujtl13g10" path="res://scenes/Player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cublipy43m8dt" path="res://scenes/pause_button.tscn" id="2_re8iq"]
 [ext_resource type="Texture2D" uid="uid://76hi8rt1miuo" path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_gr_grass.png" id="2_swr7d"]
 [ext_resource type="Texture2D" uid="uid://chgqimvh7rdh6" path="res://assets/Familiar Looking Rocket.png" id="3_d16lj"]
 [ext_resource type="PackedScene" uid="uid://ddajkgnwq5mxr" path="res://scenes/area_trigger.tscn" id="4_8tqcb"]
 [ext_resource type="Script" path="res://scenes/spawner.gd" id="5_id8ga"]
 [ext_resource type="PackedScene" uid="uid://bhukbgss3gw1c" path="res://scenes/FallingFish.tscn" id="5_nmpde"]
 [ext_resource type="PackedScene" uid="uid://dhv0w8c72p7a3" path="res://scenes/ui.tscn" id="7_5c2oi"]
+[ext_resource type="PackedScene" uid="uid://bgiqka1bdq7ct" path="res://scenes/PauseScreen.tscn" id="9_yy4d5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwa7u"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4hjba"]
 texture = ExtResource("2_swr7d")
@@ -53,11 +58,91 @@ tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_4hjba")
 
+[sub_resource type="Animation" id="Animation_ngt1f"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_jnq2f"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:draw_center")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["text_pulse", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_text_pulse"]
+resource_name = "text_pulse"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/Label:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.2, 0.2, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_62coy"]
+_data = {
+"RESET": SubResource("Animation_ngt1f"),
+"new_animation": SubResource("Animation_jnq2f"),
+"text_pulse": SubResource("Animation_text_pulse")
+}
+
 [node name="Level1" type="Node2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="PauseButton2" parent="CanvasLayer" instance=ExtResource("2_re8iq")]
+
 [node name="Ui" parent="CanvasLayer" instance=ExtResource("7_5c2oi")]
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fwa7u")
 
 [node name="Player" parent="." instance=ExtResource("1")]
 position = Vector2(445, 209)
@@ -77,6 +162,7 @@ texture = ExtResource("3_d16lj")
 [node name="AreaTrigger" parent="Sprite2D" instance=ExtResource("4_8tqcb")]
 scale = Vector2(13.6106, 23.7697)
 sceneName = "Level2"
+last_scene = "Level2"
 
 [node name="AreaTrigger" parent="." instance=ExtResource("4_8tqcb")]
 position = Vector2(1103, 651)
@@ -94,3 +180,12 @@ position = Vector2(959, -454)
 script = ExtResource("5_id8ga")
 obstacle = ExtResource("5_nmpde")
 cooldown = 0.2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_62coy")
+}
+autoplay = "new_animation"
+
+[node name="PauseScreen" parent="." instance=ExtResource("9_yy4d5")]
+visible = false

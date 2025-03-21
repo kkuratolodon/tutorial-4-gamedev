@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://c6j2nhpe4e45h"]
+[gd_scene load_steps=34 format=4 uid="uid://c6j2nhpe4e45h"]
 
 [ext_resource type="Texture2D" uid="uid://c0c4avuoeqj5v" path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_tiles.png" id="1_x3tls"]
 [ext_resource type="Texture2D" uid="uid://cluh2ekc38ktx" path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_gr_dirt.png" id="1_xkcrv"]
@@ -15,9 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://6uvffl822af8" path="res://scenes/FallingPurpleSlime.tscn" id="10_pcb8t"]
 [ext_resource type="PackedScene" uid="uid://dehnx1g6hgqdi" path="res://scenes/MovingBee.tscn" id="12_agt3j"]
 [ext_resource type="Script" path="res://scenes/horizontal_spawner.gd" id="12_ev6jd"]
+[ext_resource type="PackedScene" uid="uid://cublipy43m8dt" path="res://scenes/pause_button.tscn" id="14_7aubq"]
 [ext_resource type="PackedScene" uid="uid://ddajkgnwq5mxr" path="res://scenes/area_trigger.tscn" id="14_w6na7"]
 [ext_resource type="Texture2D" uid="uid://dgu0iw5f074dh" path="res://assets/kenney_platformerpack/PNG/Items/keyYellow.png" id="17_rtgp6"]
 [ext_resource type="Script" path="res://scenes/key_yellow.gd" id="18_tbk0p"]
+[ext_resource type="PackedScene" uid="uid://bgiqka1bdq7ct" path="res://scenes/PauseScreen.tscn" id="20_a6c14"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o75gh"]
 texture = ExtResource("1_x3tls")
@@ -287,8 +289,115 @@ sources/5 = SubResource("TileSetAtlasSource_tripg")
 sources/4 = SubResource("TileSetAtlasSource_36gl7")
 sources/0 = SubResource("TileSetAtlasSource_o75gh")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yohok"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uba57"]
 size = Vector2(92, 59)
+
+[sub_resource type="Animation" id="Animation_ngt1f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:draw_center")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jnq2f"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:draw_center")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["text_pulse", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_text_pulse"]
+resource_name = "text_pulse"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/Label:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.2, 0.2, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_62coy"]
+_data = {
+"RESET": SubResource("Animation_ngt1f"),
+"new_animation": SubResource("Animation_jnq2f"),
+"text_pulse": SubResource("Animation_text_pulse")
+}
 
 [node name="Level2" type="Node2D"]
 
@@ -312,6 +421,7 @@ collision_layer = 3
 floor_constant_speed = true
 floor_snap_length = 10.0
 jump_speed = -650
+last_scene = "Level2"
 
 [node name="Sprite2D2" type="Sprite2D" parent="Player"]
 z_index = -14
@@ -328,7 +438,19 @@ cooldown = 0.75
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Ui" parent="CanvasLayer" instance=ExtResource("9_jer7h")]
+mouse_filter = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("14_7aubq")]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yohok")
 
 [node name="Spawner2" type="Node2D" parent="."]
 position = Vector2(959, -1027)
@@ -354,6 +476,7 @@ d = 0
 position = Vector2(672, 1621)
 scale = Vector2(200, 1.834)
 sceneName = "LoseScreen"
+last_scene = "Level2"
 
 [node name="KeyYellow" type="Sprite2D" parent="."]
 position = Vector2(2484, 1219)
@@ -379,5 +502,13 @@ obstacle = ExtResource("12_agt3j")
 cooldown = 1.5
 u = 0
 d = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_62coy")
+}
+autoplay = "new_animation"
+
+[node name="PauseScreen" parent="." instance=ExtResource("20_a6c14")]
 
 [connection signal="body_entered" from="KeyYellow/Area2D" to="KeyYellow" method="_on_area_2d_body_entered"]

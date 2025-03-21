@@ -1,12 +1,236 @@
-[gd_scene load_steps=3 format=3 uid="uid://cj510juavglf8"]
+[gd_scene load_steps=14 format=3 uid="uid://cj510juavglf8"]
 
-[ext_resource type="Texture2D" uid="uid://bi5p7hlw4wlhv" path="res://assets/dead.jpg" id="1"]
 [ext_resource type="Script" path="res://scenes/lose_screen.gd" id="1_fhnyg"]
+[ext_resource type="Texture2D" uid="uid://the65ph71oeo" path="res://assets/kenney_platformerpack/PNG/Tiles/sign.png" id="2_effy0"]
+
+[sub_resource type="Animation" id="Animation_ngt1f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:draw_center")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jnq2f"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:draw_center")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["text_pulse", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_text_pulse"]
+resource_name = "text_pulse"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/Label:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.2, 0.2, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_62coy"]
+_data = {
+"RESET": SubResource("Animation_ngt1f"),
+"new_animation": SubResource("Animation_jnq2f"),
+"text_pulse": SubResource("Animation_text_pulse")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7466k"]
+bg_color = Color(0.12, 0.05, 0.1, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_yyyci"]
+font_names = PackedStringArray("Minecraft")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hover"]
+texture = ExtResource("2_effy0")
+modulate_color = Color(1.2, 1.2, 1.2, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressed"]
+texture = ExtResource("2_effy0")
+modulate_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ocpqg"]
+texture = ExtResource("2_effy0")
+
+[sub_resource type="SystemFont" id="SystemFont_f6chs"]
+font_names = PackedStringArray("Minecraft")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1gxg"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="LoseScreen" type="Node2D"]
 script = ExtResource("1_fhnyg")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(512, 320)
-scale = Vector2(0.76, 0.76)
-texture = ExtResource("1")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_62coy")
+}
+autoplay = "new_animation"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7466k")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel2/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"GraphFrameTitleLabel"
+theme_override_fonts/font = SubResource("SystemFont_yyyci")
+theme_override_font_sizes/font_size = 121
+text = "GAME OVER"
+uppercase = true
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ocpqg")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/HBoxContainer/Button"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 54.0
+offset_right = 120.0
+offset_bottom = 77.0
+theme_override_fonts/font = SubResource("SystemFont_f6chs")
+theme_override_font_sizes/font_size = 16
+text = "RESTART"
+
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ocpqg")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/HBoxContainer/MainMenuButton"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 51.0
+offset_right = 122.0
+offset_bottom = 74.0
+theme_override_fonts/font = SubResource("SystemFont_f6chs")
+theme_override_font_sizes/font_size = 16
+text = "MAIN MENU"
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a1gxg")
+
+[connection signal="pressed" from="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel2/CenterContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

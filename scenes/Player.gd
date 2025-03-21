@@ -5,6 +5,7 @@ signal update_hp(new_hp: int)
 @export var speed: int = 400
 @export var gravity: int = 1200
 @export var jump_speed: int = -400
+@export var last_scene: String = "Level1"
 var _hp = 6
 
 func get_input():
@@ -27,7 +28,7 @@ func get_damage(damage):
 	print(_hp)
 	update_hp.emit(_hp)
 	if _hp <= 0:
-		print("tes")
+		LoseScreen.last_level = last_scene
 		get_tree().change_scene_to_file(str("res://scenes/LoseScreen.tscn"))
 		
 
